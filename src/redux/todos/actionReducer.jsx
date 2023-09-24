@@ -1,4 +1,5 @@
 import {
+  TODO_LOADED,
   ADD_TODO,
   TOGGLE_TODO,
   SET_PRIORITY,
@@ -7,12 +8,12 @@ import {
   CLEAR_COMPLETED,
 } from "src/redux/todos/actionTypes";
 
-const initialState = [
-
-];
+const initialState = [];
 
 const todosReducer = (state = initialState, action) => {
   switch (action.type) {
+    case TODO_LOADED:
+      return action.payload;
     case ADD_TODO:
       return [
         ...state,
@@ -48,16 +49,26 @@ const todosReducer = (state = initialState, action) => {
     case DELETE_TODO: 
       return state.filter(todo=> todo.id !== action.payload.id)
     
-    case All_COMPLETE:
-      return state.map((todo)=>{
-        if( todo.completed === false){
+    case All_COMPLETE: 
+      //if at least one incomplete
+      const allTodosCompleted = state.every(todo => todo.completed === true);
+      if (allTodosCompleted) {
+        return state.map((todo)=>{ 
           return {
             ...todo,
-            completed: true
-          }
-        }
-        return todo
+            completed: false
+          } 
       })
+      }else{
+
+        return state.map((todo)=>{ 
+            return {
+              ...todo,
+              completed: true
+            } 
+        })
+      }
+      //if all compl
     case CLEAR_COMPLETED:
       console.log("clear")  
     return state.filter((todo)=> todo.completed === false)

@@ -1,4 +1,5 @@
 import {
+  TODO_LOADED,
   ADD_TODO,
   TOGGLE_TODO,
   SET_PRIORITY,
@@ -7,6 +8,12 @@ import {
   CLEAR_COMPLETED,
 } from "src/redux/todos/actionTypes";
 
+export const loaded_todo = (todos) => {
+  return {
+    type: TODO_LOADED,
+    payload: todos,
+  };
+};
 export const add_todo = (value) => {
   return {
     type: ADD_TODO,

@@ -1,10 +1,14 @@
 import Cancel from "src/assets/images/cancel.png";
 import { useDispatch } from "react-redux";
-import { toggle_todo, set_priority, delete_todo } from "src/redux/todos/actions";
+import {
+  toggle_todo,
+  set_priority,
+  delete_todo,
+} from "src/redux/todos/actions";
 
 export default function Todo({ todo }) {
   const { id, todoText, completed, priorityColor } = todo;
- 
+
   const dispatch = useDispatch();
 
   return (
@@ -18,7 +22,10 @@ export default function Todo({ todo }) {
         }`}
         onClick={() => dispatch(toggle_todo({ id }))}
       >
-        <input type="checkbox" className="opacity-0 absolute rounded-full" />
+        <input
+          type="checkbox"
+          className="opacity-0 absolute rounded-full cursor-pointer"
+        />
 
         <svg
           className={`${
@@ -30,9 +37,7 @@ export default function Todo({ todo }) {
         </svg>
       </div>
 
-      <div
-        className={`select-none flex-1 ${completed ? "line-through" : ""}`}
-      >
+      <div className={`select-none flex-1 ${completed ? "line-through" : ""}`}>
         {/* <div className={` "select-none flex-1 ${completed && "line-through"}"`}> */}
         {todoText}
       </div>
@@ -41,30 +46,28 @@ export default function Todo({ todo }) {
         className={`flex-shrink-0 h-4 w-4 rounded-full border-2 ml-auto cursor-pointer border-green-500 hover:bg-green-500 ${
           priorityColor === "green" && "bg-green-500"
         }`}
-        
-        onClick={()=> dispatch(set_priority( id, 'green'))}   
+        onClick={() => dispatch(set_priority(id, "green"))}
       ></div>
 
       <div
         className={`flex-shrink-0 h-4 w-4 rounded-full border-2 ml-auto cursor-pointer border-yellow-500 hover:bg-yellow-500 ${
           priorityColor === "yellow" && "bg-yellow-500"
         }`}
-        onClick={()=> dispatch(set_priority(id, 'yellow'))} 
+        onClick={() => dispatch(set_priority(id, "yellow"))}
       ></div>
 
       <div
         className={`flex-shrink-0 h-4 w-4 rounded-full border-2 ml-auto cursor-pointer border-red-500 hover:bg-red-500 ${
           priorityColor === "red" && "bg-red-500"
         }`}
-        
-        onClick={()=> dispatch(set_priority(id, 'red'))} 
+        onClick={() => dispatch(set_priority(id, "red"))}
       ></div>
 
       <img
         src={Cancel}
         className="flex-shrink-0 w-4 h-4 ml-2 cursor-pointer"
         alt="Cancel"
-        onClick={()=> dispatch(delete_todo({id}))}
+        onClick={() => dispatch(delete_todo({ id }))}
       />
     </div>
   );

@@ -8,10 +8,10 @@ import {
   all_complete,
   clear_completed,
 } from "src/redux/todos/actions";
+import addTodo from "../redux/todos/thunk/addTodos";
 export default function Header() {
   const dispatch = useDispatch();
-  const todoList = useSelector((state) => state);
-  // console.log(todoList);
+  const todoList = useSelector((state) => state); 
   const [todoText, setTodoText] = useState();
 
   const handleSubmit = (e) => {
@@ -19,9 +19,12 @@ export default function Header() {
     const todoItem = {
       id: crypto.randomUUID(),
       todoText,
-    };
-    dispatch(add_todo(todoItem));
+      completed: false,
+      priorityColor: '',
+    }; 
+    dispatch(addTodo(todoItem));
   };
+  
   return (
     <div>
       <form className="flex items-center bg-gray-100 px-4 py-4 rounded-md">
@@ -39,24 +42,23 @@ export default function Header() {
           onClick={handleSubmit}
         ></button>
       </form>
-
-      <ul className="flex justify-between my-4 text-xs text-gray-500">
-        <li className="flex space-x-1 cursor-pointer"       onClick={() => dispatch(all_complete())}>
-          <img
-            className="w-4 h-4"
-            src={DoubleTick}
-            alt="Complete"
-      
-          />
-          <span>Complete All Tasks</span>
-        </li>
-        <li
-          className="cursor-pointer"
-          onClick={() => dispatch(clear_completed())}
-        >
-          Clear completed
-        </li>
-      </ul>
+      {todoList.todos.length > 0 && (
+        <ul className="flex justify-between my-4 text-xs text-gray-500">
+          <li
+            className="flex space-x-1 cursor-pointer"
+            onClick={() => dispatch(all_complete())}
+          >
+            <img className="w-4 h-4" src={DoubleTick} alt="Complete" />
+            <span>Complete All Tasks</span>
+          </li>
+          <li
+            className="cursor-pointer"
+            onClick={() => dispatch(clear_completed())}
+          >
+            Clear completed
+          </li>
+        </ul>
+      )}
     </div>
   );
 }
