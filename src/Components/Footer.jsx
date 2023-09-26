@@ -4,9 +4,9 @@ import { filter_by_status, filter_by_color } from "src/redux/filters/actions";
 
 export default function Footer() {
   const dispatch = useDispatch();
-  const todoList = useSelector((state) => state);
+  const todoList = useSelector((state) => state.todos);
   const {status, color} = useSelector((state) => state.filters); 
-  const incompleteTaskCount = todoList.todos.filter(
+  const incompleteTaskCount = todoList.filter(
     (todo) => todo.completed === false
   ).length;
 
@@ -25,7 +25,7 @@ export default function Footer() {
 
   return (
     <>
-      {todoList.todos.length > 0 ? (
+      {todoList.length > 0 ? (
         <div className="mt-4 flex justify-between text-xs text-gray-500">
           <p>
             {incompleteTaskCount === 0 ? "No" : incompleteTaskCount} tasks left

@@ -11,7 +11,7 @@ import {
 import addTodo from "../redux/todos/thunk/addTodos";
 export default function Header() {
   const dispatch = useDispatch();
-  const todoList = useSelector((state) => state); 
+  const todoList = useSelector((state) => state.todos); 
   const [todoText, setTodoText] = useState();
 
   const handleSubmit = (e) => {
@@ -42,7 +42,7 @@ export default function Header() {
           onClick={handleSubmit}
         ></button>
       </form>
-      {todoList.todos.length > 0 && (
+      {todoList.length > 0 && (
         <ul className="flex justify-between my-4 text-xs text-gray-500">
           <li
             className="flex space-x-1 cursor-pointer"

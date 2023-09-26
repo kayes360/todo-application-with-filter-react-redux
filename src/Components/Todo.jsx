@@ -5,11 +5,21 @@ import {
   set_priority,
   delete_todo,
 } from "src/redux/todos/actions";
+import updateTodos from "../redux/todos/thunk/updateTodos";
+import deleteTodos from "../redux/todos/thunk/deleteTodos";
+import changeColor from "../redux/todos/thunk/changeColor";
 
 export default function Todo({ todo }) {
   const { id, todoText, completed, priorityColor } = todo;
 
   const dispatch = useDispatch();
+
+  const handleColorChange = (id, color) => {
+    dispatch(changeColor(id, color));
+  };
+  const handleDelete = (id) => {
+    dispatch(deleteTodos(id));
+  };
 
   return (
     <div
@@ -20,7 +30,7 @@ export default function Todo({ todo }) {
         className={`rounded-full bg-white border-2 border-gray-400 w-5 h-5 flex flex-shrink-0 justify-center items-center mr-2 ${
           completed && "border-green-500 focus-within:border-green-500"
         }`}
-        onClick={() => dispatch(toggle_todo({ id }))}
+        onClick={() => dispatch(updateTodos(id, completed))}
       >
         <input
           type="checkbox"
@@ -46,28 +56,28 @@ export default function Todo({ todo }) {
         className={`flex-shrink-0 h-4 w-4 rounded-full border-2 ml-auto cursor-pointer border-green-500 hover:bg-green-500 ${
           priorityColor === "green" && "bg-green-500"
         }`}
-        onClick={() => dispatch(set_priority(id, "green"))}
+        onClick={() => handleColorChange(id, "green")}
       ></div>
 
       <div
         className={`flex-shrink-0 h-4 w-4 rounded-full border-2 ml-auto cursor-pointer border-yellow-500 hover:bg-yellow-500 ${
           priorityColor === "yellow" && "bg-yellow-500"
         }`}
-        onClick={() => dispatch(set_priority(id, "yellow"))}
+        onClick={() => handleColorChange(id, "yellow")}
       ></div>
 
       <div
         className={`flex-shrink-0 h-4 w-4 rounded-full border-2 ml-auto cursor-pointer border-red-500 hover:bg-red-500 ${
           priorityColor === "red" && "bg-red-500"
         }`}
-        onClick={() => dispatch(set_priority(id, "red"))}
+        onClick={() => handleColorChange(id, "red")}
       ></div>
 
       <img
         src={Cancel}
         className="flex-shrink-0 w-4 h-4 ml-2 cursor-pointer"
         alt="Cancel"
-        onClick={() => dispatch(delete_todo({ id }))}
+        onClick={() => handleDelete(id)}
       />
     </div>
   );

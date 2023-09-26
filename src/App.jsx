@@ -2,11 +2,11 @@ import Navbar from "src/Components/Navbar";
 import Footer from "src/Components/Footer";
 import Header from "src/Components/Header"; 
 import TodoList from "./Components/TodoList";
-import { useSelector } from "react-redux";
+import { useSelector } from "react-redux"; 
 
 function App() {
-  const todosList = useSelector((state) => state); 
-  const isTodoExist =  Boolean(todosList.todos.length> 0); 
+  const todosList = useSelector((state) => state.todos);
+  const isTodoExist =  Boolean(todosList.length> 0); 
   return (
     <>
       <div className="grid place-items-center bg-blue-100 h-screen px-6 font-sans">
@@ -22,6 +22,7 @@ function App() {
           <Footer />
         </div>
       </div>
+ 
     </>
   );
 }
